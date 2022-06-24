@@ -59,3 +59,7 @@ Faraday::Request.register_middleware(
   # Avoid polluting the global middleware namespace with a prefix.
   airrecord_rate_limiter: Airrecord::FaradayRateLimiter
 )
+
+Faraday.new do |faraday|
+  faraday.response :logger, ::Logger.new(STDOUT), body: true, bodies: { request: true, response: true }
+end
