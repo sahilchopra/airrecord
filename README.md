@@ -17,6 +17,7 @@ A quick example to give an idea of the API that Airrecord provides:
 
 ```ruby
 Airrecord.api_key = "key1"
+Airrecord.api_url = "url"
 
 class Tea < Airrecord::Table
   self.base_key = "app1"

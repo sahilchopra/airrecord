@@ -4,20 +4,21 @@ require_relative 'faraday_rate_limiter'
 
 module Airrecord
   class Client
-    attr_reader :api_key
+    attr_reader :api_key, :api_url
     attr_writer :connection
 
     # Per Airtable's documentation you will get throttled for 30 seconds if you
     # issue more than 5 requests per second. Airrecord is a good citizen.
     AIRTABLE_RPS_LIMIT = 5
 
-    def initialize(api_key)
+    def initialize(api_key, api_url="https://api.airtable.com")
       @api_key = api_key
+      @api_url = api_url
     end
 
     def connection
       @connection ||= Faraday.new(
-        url: "https://api.airtable.com",
+        url: api_url,
         headers: {
           "Authorization" => "Bearer #{api_key}",
           "User-Agent"    => "Airrecord/#{Airrecord::VERSION}",

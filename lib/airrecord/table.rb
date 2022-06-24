@@ -4,15 +4,19 @@ module Airrecord
   class Table
     class << self
       attr_accessor :base_key, :table_name
-      attr_writer :api_key
+      attr_writer :api_key, :api_url
 
       def client
         @@clients ||= {}
-        @@clients[api_key] ||= Client.new(api_key)
+        @@clients[api_key] ||= Client.new(api_key, api_url)
       end
 
       def api_key
         defined?(@api_key) ? @api_key : Airrecord.api_key
+      end
+
+      def api_url
+        defined?(@api_url) ? @api_url : Airrecord.api_url
       end
 
       def has_many(method_name, options)
